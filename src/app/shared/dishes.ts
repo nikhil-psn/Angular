@@ -15,7 +15,7 @@ export const DISHES: Dish[] = [
             {
                 rating: 5,
                 comment: 'Imagine all the eatables, living in conFusion!',
-                author: 'John Lemon',
+                author: 'Sai Nikhil',
                 date: '2012-10-16T17:57:28.556094Z'
             },
             {
@@ -57,7 +57,7 @@ export const DISHES: Dish[] = [
             {
                 rating: 5,
                 comment: 'Imagine all the eatables, living in conFusion!',
-                author: 'John Lemon',
+                author: 'Sai Preeti',
                 date: '2012-10-16T17:57:28.556094Z'
             },
             {
@@ -99,7 +99,7 @@ export const DISHES: Dish[] = [
             {
                 rating: 5,
                 comment: 'Imagine all the eatables, living in conFusion!',
-                author: 'John Lemon',
+                author: 'Shashi',
                 date: '2012-10-16T17:57:28.556094Z'
             },
             {
@@ -141,7 +141,7 @@ export const DISHES: Dish[] = [
             {
                 rating: 5,
                 comment: 'Imagine all the eatables, living in conFusion!',
-                author: 'John Lemon',
+                author: 'Sobha Rani',
                 date: '2012-10-16T17:57:28.556094Z'
             },
             {
