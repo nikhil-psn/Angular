@@ -16,6 +16,7 @@ import { Comment } from '../shared/comment';
 export class DishdetailComponent implements OnInit {
 
   dish: Dish;
+  dishcopy:Dish;
   errMess: string;
   dishIds: string[];
   prev: string;
@@ -23,7 +24,6 @@ export class DishdetailComponent implements OnInit {
 
   commentForm: FormGroup;
   comment: Comment;
-  dishcopy: Dish;
   visibility = 'shown';
 
   formErrors = {
@@ -46,16 +46,18 @@ export class DishdetailComponent implements OnInit {
   constructor(private dishService: DishService,
     private route: ActivatedRoute,
     private location: Location,
-    private fb: FormBuilder){
+    private fb: FormBuilder,
+    @Inject('baseURL') private baseURL){
       this.createForm();
     }
 
   ngOnInit() {
-    this.dishService.getDishIds().subscribe((dishIds) => this.dishIds = dishIds);
-    this.route.params
-        .pipe(switchMap((params: Params) => { this.visibility = 'hidden'; return this.dishService.getDish(params['id']); }))
-        .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); this.visibility = 'shown'; },
-        errMess => this.errMess = <any>errMess);
+    this.dishService.getDishIds().subscribe((dishIds) => this.dishIds = dishIds,
+      errMess => this.errMess = <any>errMess);
+      this.route.params
+      .pipe(switchMap((params: Params) => this.dishService.getDish(params['id'])))
+      .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+        errmess => this.errMess = <any>errmess );
   }
 
   setPrevNext(dishIds: string) {
@@ -105,13 +107,11 @@ export class DishdetailComponent implements OnInit {
     this.comment = this.commentForm.value;
     this.comment.date = new Date().toISOString();
     this.dishcopy.comments.push(this.comment);
-    console.log(this.comment);
-    this.comment = null;
-    this.commentForm.reset({
-      author: '',
-      comment: '',
-      rating: 5
-    });
+    this.dishService.putDish(this.dishcopy)
+      .subscribe(dish => {
+        this.dish = dish; this.dishcopy = dish;
+      },
+      errmess => { this.dish = null; this.dishcopy = null; this.errMess = <any>errmess; });
   }
 
 }
